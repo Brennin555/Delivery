@@ -27,8 +27,9 @@ export class CategoriasPage implements OnInit {
   }
 
   logout() {
-
-  }
+    // this.storage.clear();
+     this.router.navigate(['/login'])
+ }
 
   ionViewWillEnter() {
     this.lista = [];

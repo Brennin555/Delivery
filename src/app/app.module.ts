@@ -8,13 +8,19 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Post } from './services/post.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+//import { NativeStorage } from '@awesome-cordova-plugins/native-storage';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [Post,{provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+      Post,
+      NativeStorage,
+      {provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   
-     bootstrap: [AppComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

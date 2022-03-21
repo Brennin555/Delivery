@@ -1,0 +1,93 @@
+<ion-content class="ion-padding animated fadeIn login auth-page">
+  
+  <div class="auth-content">
+
+    <!-- Logo -->
+    <div padding-horizontal text-center class="animated fadeInDown">
+      <div class="logo"></div>
+      <h4 no-margin>
+          <ion-img class="img-login center" src="../assets/logo.png"></ion-img>
+       
+       
+       
+       </h4>
+    </div>
+
+    <!-- Login form -->
+    <div  class="list-form">
+      <ion-item no-padding class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="mail" item-start></ion-icon>
+          Usuário
+        </ion-label>
+        <ion-input color="light" type="text" [(ngModel)]="usuario"></ion-input>
+      </ion-item>
+      <p ion-text class="text08">
+        <ion-text color="warning">
+          Campo Requerido
+        </ion-text>
+      </p>
+
+      <ion-item no-padding class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="lock-closed" item-start></ion-icon>
+          Senha
+        </ion-label>
+        <ion-input color="light" type="password" [(ngModel)]="senha"></ion-input>
+      </ion-item>
+      <p ion-text color="warning" class="text08">
+        <ion-text color="warning">
+          Campo Requerido
+        </ion-text>
+        </p>
+      </div>
+
+    
+    <br><br>
+
+    <div>
+      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="login()"  tappable>
+        <ion-icon name="log-in"></ion-icon>
+        Login
+      </ion-button>
+
+     
+
+    </div>
+
+    <!-- Other links -->
+  
+
+  </div>
+</ion-content>
+
+
+
+
+<ion-footer>
+ 
+
+  <ion-grid>
+    <ion-row>
+      <ion-col >
+        <ion-tab-button (click)="cadastro()">
+          <ion-icon color="primary" name="list-circle"></ion-icon>
+          <ion-label>Cadastro</ion-label>
+        </ion-tab-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-tab-button (click)="recuperarModal()">
+          <ion-icon color="primary" name="list-circle"></ion-icon>
+          <ion-label>Recuperar</ion-label>
+        </ion-tab-button>
+      </ion-col>
+
+      </ion-row>
+      
+      </ion-grid>
+    
+  
+    
+
+</ion-footer>

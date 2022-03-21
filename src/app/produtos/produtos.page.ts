@@ -27,7 +27,8 @@ export class ProdutosPage implements OnInit {
   }
 
   logout() {
-
+     // this.storage.clear();
+      this.router.navigate(['/login'])
   }
 
   ionViewWillEnter() {
