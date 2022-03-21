@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Post{
     server: string = 'http://delivery.hugocursos.com.br/apis/';
-    //url_site_img_produtos: string = 'http://delivery.hugocursos.com.br/images/produtos/';
-    //url_site_img_cat: string = 'http://delivery.hugocursos.com.br/images/categorias/';
+    url_site_img_produtos: string = 'http://delivery.hugocursos.com.br/images/produtos/';
+    url_site_img_cat: string = 'http://delivery.hugocursos.com.br/images/categorias/';
 
     constructor(private http : HttpClient){
        

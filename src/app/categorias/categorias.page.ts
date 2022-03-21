@@ -4,11 +4,11 @@ import { ToastController } from '@ionic/angular';
 import { Post } from '../services/post.service';
 
 @Component({
-  selector: 'app-produtos',
-  templateUrl: './produtos.page.html',
-  styleUrls: ['./produtos.page.scss'],
+  selector: 'app-categorias',
+  templateUrl: './categorias.page.html',
+  styleUrls: ['./categorias.page.scss'],
 })
-export class ProdutosPage implements OnInit {
+export class CategoriasPage implements OnInit {
 
   lista: any = [];
   url_site_img: string;
@@ -18,7 +18,7 @@ export class ProdutosPage implements OnInit {
   total_itens: number = 0;
   cpf: string;
 
-  constructor(private provider: Post, public toast: ToastController, private actRouter: ActivatedRoute, private router: Router) { }
+  constructor(private provider: Post, public toast: ToastController, private actRouter: ActivatedRoute, private router: Router ) { }
 
   ngOnInit() {
     this.actRouter.params.subscribe((data: any) => {
@@ -34,7 +34,7 @@ export class ProdutosPage implements OnInit {
     this.lista = [];
     this.start = 0;
     this.listarProdutos();
-    this.url_site_img = this.provider.url_site_img_produtos;
+    this.url_site_img = this.provider.url_site_img_cat;
   }
 
 
@@ -42,7 +42,7 @@ export class ProdutosPage implements OnInit {
     return new Promise(resolve => {
 
       let dados = {
-        requisicao: 'listar-produtos',
+        requisicao: 'listar-cat',
         limit: this.limit,
         start: this.start,
         id_cat: this.id,
@@ -67,6 +67,7 @@ export class ProdutosPage implements OnInit {
     });
   }
 
+  
   loadData(event) {
 
     this.start += this.limit;
@@ -79,9 +80,14 @@ export class ProdutosPage implements OnInit {
 
   }
 
-  categorias() {
-    this.router.navigate(['/categorias']);
+  produtos() {
+    this.router.navigate(['/produtos']);
   }
 
+  verProdutos(id){
+    this.router.navigate(['/produtos/' + id ]);
+
+
+  }
 
 }
