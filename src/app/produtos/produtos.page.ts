@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Post } from '../services/post.service';
 
@@ -9,10 +10,20 @@ import { Post } from '../services/post.service';
 })
 export class ProdutosPage implements OnInit {
 
+  url_site_img : string;
+  limit : number = 10;
+  start : number = 0;
+  id: number;
+  total_itens : number = 0;
+  cpf : string;
+
   lista: any = [];
-  constructor(private provider: Post, public toast: ToastController) { }
+  constructor(private provider: Post, public toast: ToastController, private actRouter: ActivatedRoute) { }
 
   ngOnInit() {
+    this.actRouter.params.subscribe((data:any)=>{
+    this.id = data.id;
+    });
   }
 
   logout() {
@@ -29,6 +40,9 @@ export class ProdutosPage implements OnInit {
 
       let dados = {
         requisicao: 'listar-produtos',
+        limit : this.limit,
+        start : this.start,
+        id_cat :this.id, 
 
       };
 
@@ -53,4 +67,3 @@ export class ProdutosPage implements OnInit {
 }
 
 }
-
