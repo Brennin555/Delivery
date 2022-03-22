@@ -1,9 +1,138 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>cadastro</ion-title>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start" (click)="login()">
+      <ion-button>
+        <ion-icon  name="arrow-back"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Cadastrar Cliente</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="floating">
+      Nome
+    </ion-label>
+    <ion-input [(ngModel)]="nome">
+
+    </ion-input>
+  </ion-item>
+
+  
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">
+          CPF
+        </ion-label>
+        <ion-input [(ngModel)]="cpf">
+    
+        </ion-input>
+      </ion-item>
+    </ion-col>
+
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">
+          Telefone
+        </ion-label>
+        <ion-input [(ngModel)]="telefone">
+    
+        </ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  
+
+
+  
+
+
+  <ion-item>
+    <ion-label position="floating">
+      Email
+    </ion-label>
+    <ion-input [(ngModel)]="usuario">
+
+    </ion-input>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label position="floating">
+      Senha
+    </ion-label>
+    <ion-input [(ngModel)]="senha">
+
+    </ion-input>
+  </ion-item>
+
+<ion-row>
+  <ion-col size="9">
+    <ion-item>
+      <ion-label position="floating">
+        Rua
+      </ion-label>
+      <ion-input [(ngModel)]="rua"></ion-input>
+  
+     
+    </ion-item>
+  </ion-col>
+
+  <ion-col size="3">
+    <ion-item>
+      <ion-label position="floating">
+        Nº
+      </ion-label>
+      <ion-input [(ngModel)]="numero"></ion-input>
+  
+      
+    </ion-item>
+  </ion-col>
+</ion-row>
+
+
+  
+
+  <ion-item >
+    <ion-label>Bairro</ion-label>
+    <ion-select placeholder="Selecione" [(ngModel)]="bairro" >
+      <ion-select-option *ngFor="let item of lista" value="{{item.nome}}">{{item.nome}}</ion-select-option>
+          
+    </ion-select>
+  </ion-item>
+
+
+  <ion-row>
+    <ion-col size="8">
+      <ion-item>
+        <ion-label position="floating">
+          Cidade
+        </ion-label>
+        <ion-input [(ngModel)]="cidade"></ion-input>
+    
+       
+      </ion-item>
+    </ion-col>
+  
+    <ion-col size="4">
+      <ion-item>
+        <ion-label position="floating">
+          CEP
+        </ion-label>
+        <ion-input [(ngModel)]="cep"></ion-input>
+    
+        
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-button color="danger" expand="block" (click)="cadastro()">
+    Salvar
+  </ion-button>
+
+ 
 
 </ion-content>

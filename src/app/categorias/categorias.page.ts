@@ -91,4 +91,9 @@ export class CategoriasPage implements OnInit {
 
   }
 
+  carrinhoPage(){
+    this.router.navigate(['/carrinho']);
+  }
+  
+
 }

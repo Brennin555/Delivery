@@ -16,8 +16,6 @@ export class LoginPage implements OnInit {
   senha : string = "";
 
 
- 
-
   constructor(
     private storage: NativeStorage,
     public alertController: AlertController,  private router:Router, private provider:Post, public toast: ToastController) { }
@@ -50,8 +48,7 @@ export class LoginPage implements OnInit {
     let dados = {
       requisicao : 'login',
       usuario : this.usuario, 
-      senha : this.senha
-      
+      senha : this.senha,
       };
 
       this.provider.dadosApi(dados, 'apiLogin.php').subscribe(async data => {

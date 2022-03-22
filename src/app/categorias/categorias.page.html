@@ -16,7 +16,7 @@
       <ion-img class="img-login-center" src="{{url_site_img}}{{item.imagem}}"></ion-img>
       <ion-card-header>
         <ion-card-title>{{item.nome}}</ion-card-title>
-        <ion-card-subtitle>R$ {{item.produtos}}</ion-card-subtitle>
+        <ion-card-subtitle>Variedades: {{item.produtos}}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-button (click)="verProdutos(item.id)" expand="block" color="success">
@@ -44,15 +44,14 @@
     <ion-row>
       <ion-col >
         <ion-tab-button (click)="produtos()">
-          <ion-icon color="primary" name="list-circle"></ion-icon>
+          <ion-icon color="primary" name="list" size="large"></ion-icon>
           <ion-label>Produtos</ion-label>
         </ion-tab-button>
       </ion-col>
 
       <ion-col (click)="carrinhoPage()">
         <div class="rodape-carrinho center">
-        <ion-icon color="danger" name="cart"></ion-icon>
-        Carrinho:
+        <ion-icon color="danger" name="cart" size="large"></ion-icon>
         <div>R$ {{total_carrinho}}</div>
       </div>
       </ion-col>

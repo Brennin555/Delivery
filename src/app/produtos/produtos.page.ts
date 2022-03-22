@@ -1,7 +1,8 @@
+import { Post } from './../services/post.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { Post } from '../services/post.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-produtos',
@@ -10,79 +11,184 @@ import { Post } from '../services/post.service';
 })
 export class ProdutosPage implements OnInit {
 
-  lista: any = [];
-  url_site_img: string;
-  limit: number = 10;
-  start: number = 0;
-  id: number;
-  total_itens: number = 0;
-  cpf: string;
 
-  constructor(private provider: Post, public toast: ToastController, private actRouter: ActivatedRoute, private router: Router) { }
+  lista : any = [];
+  url_site_img : string;
+  limit : number = 10;
+  start : number = 0;
+  id: number;
+  total_itens : number = 0;
+  cpf : string;
+
+  total_carrinho : string;
+  dadosLogin : any;
+  constructor(private storage: NativeStorage, private actRouter: ActivatedRoute, private router: Router, private provider:Post, public toast: ToastController) { }
 
   ngOnInit() {
-    this.actRouter.params.subscribe((data: any) => {
+    this.actRouter.params.subscribe((data:any)=>{
       this.id = data.id;
+     
     });
   }
 
-  logout() {
-     // this.storage.clear();
-      this.router.navigate(['/login'])
+  logout(){
+    //this.storage.clear();
+    this.router.navigate(['/login']);
   }
 
-  ionViewWillEnter() {
+  
+  ionViewWillEnter(){
+
+    this.storage.getItem('session_storage').then((res)=>{
+      this.dadosLogin = res;
+    //  this.cpf = this.dadosLogin.cpf;
+     
+      
+    }); 
+    this.cpf = '123.321.123-13';
+
+
     this.lista = [];
-    this.start = 0;
+    this.start = 0;   
     this.listarProdutos();
-    this.url_site_img = this.provider.url_site_img_produtos;
+    this.listarCarrinho();
+    this.url_site_img = this.provider.url_site_img_produtos; 
   }
 
 
-  listarProdutos() {
+
+
+  listarProdutos(){
     return new Promise(resolve => {
 
-      let dados = {
-        requisicao: 'listar-produtos',
-        limit: this.limit,
-        start: this.start,
-        id_cat: this.id,
-
+    let dados = {
+      requisicao : 'listar-produtos',
+      limit : this.limit,
+      start : this.start,
+      id_cat :this.id, 
       };
 
       this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
 
-        if (data['result'] == '0') {
+        if(data['result'] == '0') {
           this.ionViewWillEnter();
-        } else {
+        }else{
           this.lista = [];
-          for (let item of data['result']) {
+          for(let item of data['result']){
             this.lista.push(item);
             this.total_itens = data['total'];
-
+            
           }
         }
-
+         
         resolve(true);
-      });
+        
     });
+
+  });
+    
   }
 
-  loadData(event) {
 
-    this.start += this.limit;
 
-    setTimeout(() => {
-      this.listarProdutos().then(() => {
-        event.target.complete();
-      });
-    }, 3000);
-
-  }
-
-  categorias() {
+  categorias(){
     this.router.navigate(['/categorias']);
   }
+
+
+  //barra de rolagem
+loadData(event) {
+
+  this.start += this.limit;
+
+  setTimeout(() => {
+    this.listarProdutos().then(()=>{ 
+      event.target.complete();
+     });
+   
+  }, 3000);
+  
+
+}
+
+
+
+async mensagemSalvar() {
+  const toast = await this.toast.create({
+    message: 'Adicionado ao Carinho!',
+    duration: 500,
+    color: 'primary'
+  });
+  toast.present();
+}
+
+
+async mensagemLogar() {
+  const toast = await this.toast.create({
+    message: 'Você precisa estar logado! Faça Login ou Cadastre-se!',
+    duration: 4000,
+    color: 'danger'
+  });
+  toast.present();
+}
+
+
+addCarrinho(id){
+  if(this.cpf === undefined){
+    this.mensagemLogar();
+    this.router.navigate(['/login']);
+    console.log(this.cpf);
+    return;
+  }
+  return new Promise(resolve => {
+        
+    let dados = {
+      requisicao : 'add-carrinho',
+      id_produto : id, 
+      cpf : this.cpf, 
+      
+      };
+
+      this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
+               
+          this.mensagemSalvar();
+          this.listarCarrinho();
+                  
+      });
+  });
+}
+
+
+
+
+listarCarrinho(){
+  return new Promise(resolve => {
+
+  let dados = {
+    requisicao : 'listar-carrinho',
+    cpf :this.cpf, 
+    };
+
+    this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
+
+        
+          this.total_carrinho = data['total'];
+         
+             
+      resolve(true);
+      
+  });
+
+});
+  
+}
+
+
+
+
+carrinhoPage(){
+  this.router.navigate(['/carrinho']);
+}
 
 
 }
