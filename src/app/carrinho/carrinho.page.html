@@ -18,7 +18,7 @@
   <ion-item-sliding *ngFor="let item of lista">
      
     <ion-item-options side="start">
-      <ion-item-option (click)="addItem(item.id)" color="success">ADD + 1</ion-item-option>
+      <ion-item-option (click)="addItem(item.id)" color="success"> + 1</ion-item-option>
     </ion-item-options>
 
   <ion-item>
@@ -36,7 +36,7 @@
   </ion-item>
 
   <ion-item-options  side="end">
-    <ion-item-option (click)="removeItem(item.id)" color="danger">Remover - 1</ion-item-option>
+    <ion-item-option (click)="removeItem(item.id)" color="danger"> - 1</ion-item-option>
   </ion-item-options>
 
 </ion-item-sliding>

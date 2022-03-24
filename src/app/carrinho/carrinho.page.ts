@@ -57,8 +57,7 @@ export class CarrinhoPage implements OnInit {
      
       
     }); 
-    
-    this.cpf = '777.777.777-77';
+    this.cpf = '123.321.123-13';
 
     if(this.cpf === undefined){
       this.router.navigate(['/login']);
@@ -104,6 +103,8 @@ loadData(event) {
   
 
 }
+
+
 
 async mensagemSalvar(texto) {
   const toast = await this.toast.create({
@@ -257,9 +258,7 @@ async finalizarModal(){
         
       },
 
-      
-
-      
+         
       
     ],
     
@@ -340,7 +339,7 @@ listarClientes(){
         
           
           if(data['result'] == '0') {
-            this.ionViewWillEnter();
+         //   this.ionViewWillEnter();
           }else{
            
            
