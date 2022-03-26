@@ -1,0 +1,7 @@
+<ion-grid class="ion-rating-container">
+  <ion-row>
+    <ion-col *ngFor = "let star of stars" tappable (click) = "starClicked(1)">
+      <ion-icon [name] = "star"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-grid>

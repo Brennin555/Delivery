@@ -27,6 +27,7 @@ export class LoginPage implements OnInit {
     if(this.usuario == ""){
       const toast = await this.toast.create({
         message: 'Preencha o Usuário',
+        position: 'middle',
         duration: 2000,
         color: 'warning'
       });
@@ -37,6 +38,7 @@ export class LoginPage implements OnInit {
     if(this.senha == ""){
       const toast = await this.toast.create({
         message: 'Preencha a Senha',
+        position: 'middle',
         duration: 2000,
         color: 'warning'
       });
@@ -60,6 +62,7 @@ export class LoginPage implements OnInit {
                 
         const toast = await this.toast.create({
           message: 'Logado com Sucesso!!',
+          position: 'middle',
           duration: 1000,
           color: 'success'
         });
@@ -70,6 +73,7 @@ export class LoginPage implements OnInit {
       }else{
         const toast = await this.toast.create({
           message: alert,
+          position: 'middle',
           duration: 2000,
           color: 'danger'
         });
@@ -131,6 +135,7 @@ async recuperarModal(){
 async mensagemSalvar(msg) {
   const toast = await this.toast.create({
     message: msg,
+    position: 'middle',
     duration: 1000
   });
   toast.present();

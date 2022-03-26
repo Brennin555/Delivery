@@ -76,6 +76,7 @@ export class CarrinhoPage implements OnInit {
     const toast = await this.toast.create({
       message: 'Você precisa estar logado! Faça Login ou Cadastre-se!',
       duration: 4000,
+      position: 'middle',
       color: 'danger'
     });
     toast.present();
@@ -109,8 +110,9 @@ loadData(event) {
 async mensagemSalvar(texto) {
   const toast = await this.toast.create({
     message: texto,
-    duration: 1000,
-    color: 'primary'
+    duration: 3000,
+    position: 'middle',
+    color: 'success'
   });
   toast.present();
 }

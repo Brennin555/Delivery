@@ -116,8 +116,9 @@ loadData(event) {
 async mensagemSalvar() {
   const toast = await this.toast.create({
     message: 'Adicionado ao Carinho!',
+    position: 'middle',
     duration: 500,
-    color: 'primary'
+    color: 'success',
   });
   toast.present();
 }
@@ -126,6 +127,7 @@ async mensagemSalvar() {
 async mensagemLogar() {
   const toast = await this.toast.create({
     message: 'Você precisa estar logado! Faça Login ou Cadastre-se!',
+    position: 'middle',
     duration: 4000,
     color: 'danger'
   });

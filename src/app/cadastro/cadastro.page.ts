@@ -48,6 +48,8 @@ export class CadastroPage implements OnInit {
   async mensagemSalvar(texto) {
     const toast = await this.toastController.create({
       message: texto,
+      position: 'middle',
+      color: 'danger',
       duration: 1000
     });
     toast.present();
