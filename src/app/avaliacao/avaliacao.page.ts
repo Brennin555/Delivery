@@ -1,10 +1,9 @@
 import { Post } from './../services/post.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
-//import {IonComponentComponent} from '../ion-component.component';
 
 @Component({
   selector: 'app-avaliacao',
@@ -13,15 +12,20 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 })
 export class AvaliacaoPage implements OnInit {
 
-  @Input() numStars: number = 4;
-  @Input() value: number = 1;
 
-  @Output() ionClick: EventEmitter<number> = new EventEmitter<number>();
+  condition:number[] = [4,4,4,4,4];
 
-  stars: string[] = []; 
-  constructor(private storage: NativeStorage, private actRouter: ActivatedRoute, private router: Router, private provider: Post, public toast: ToastController) { }
+ 
+  list: any[] = new Array(5);
+
+ 
+
+  
+
+  constructor(private storage: NativeStorage, private actRouter: ActivatedRoute, private router: Router, private provider: Post, public alert: AlertController, public toast: ToastController) { }
 
   ngOnInit() {
+
   }
 
   logout() {
@@ -29,35 +33,51 @@ export class AvaliacaoPage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  finalizar() {
+  finalizar() {  
+    this.alertAval();
+   
     this.router.navigate(['/produtos']);
-    console.log("Deu tudo certo, avaliação realizada");
+  
+    console.log("app-nota: " + this.condition[1]);
+    console.log("produto-nota: " + this.condition[2]);
+    console.log("preço-nota: " + this.condition[3]);
+    console.log("espera-nota: " + this.condition[4]);
+  
+  
   }
 
-//---------------------------------------------------------------
+  //---------------------------------------------------------------
 
-  ngAfterViewInit(){
-    this.calc();
+
+  review1(i) {
+    this.condition[1] = i + 1;
   }
-
-  calc(){
-    this.stars = [];
-    let tmp = this.value;
-    for(let i=0; i <= this.numStars; i++, tmp--){
-      if(tmp>=1){
-        this.stars.push("star");
-      }
-      else{
-        this.stars.push("star-outline");
-      }
-
-    }
+  review2(i) {   
+    this.condition[2] = i + 1;
   }
-
-  starClicked(index){
-    console.log(index + 1);
-    this.value = index + 1
-    this.ionClick.emit(this.value);
+  review3(i) {  
+    this.condition[3] = i + 1;
   }
+  review4(i) { 
+    this.condition[4] = i + 1;
+  }
+  
 
+  async alertAval() {
+    const alert = await this.alert.create({
+      cssClass: 'my-custom-class',
+      header: 'Resultado avaliação',
+      subHeader: 'Código:',// + codigo,
+      message:
+
+      'Nota do aplicativo:' + this.condition[1] +
+      '   /   Nota do produto:' + this.condition[2] +
+      '   /   Nota do preço:' + this.condition[3] +
+      '   /   Nota da espera:' + this.condition[4],
+
+       buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 }

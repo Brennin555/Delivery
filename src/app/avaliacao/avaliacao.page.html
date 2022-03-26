@@ -20,28 +20,23 @@
     </ion-card-header>
   </ion-card>
 
- 
-  <ion-grid class="ion-rating-container" (ionClick) = "log($event)">
-    <ion-row>
-      <ion-col *ngFor = "let star of stars" tappable (click) = "starClicked(1)">
-        <ion-icon [name] = "star" color = "warning"></ion-icon>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-
-
   <ion-card>
     <ion-card-header color="warning">
       <ion-card-title>O que achou do aplicativo?</ion-card-title>
     </ion-card-header>
 
-    <ion-chip color="warning" *ngFor="let number of classification">
-      <ion-label color="dark">{{number}}</ion-label>
-    </ion-chip>
-    <ion-chip color="warning">
-      <ion-icon name="star-outline"></ion-icon>
-    </ion-chip>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2.5"></ion-col>
+        <ion-col>
+          <ion-icon size="large" color="warning" *ngFor="let item of list; let i = index"
+            [name]="condition[1] <= i? 'star-outline' :'star'" (click)="review1(i)">
+          </ion-icon>
+        </ion-col>
+        <ion-col size="2.5"></ion-col>
+      </ion-row>
+    </ion-grid>
+
   </ion-card>
 
   <ion-card>
@@ -49,12 +44,17 @@
       <ion-card-title>O que achou dos produtos?</ion-card-title>
     </ion-card-header>
 
-    <ion-chip color="warning" *ngFor="let number of classification">
-      <ion-label color="dark">{{number}}</ion-label>
-    </ion-chip>
-    <ion-chip color="warning">
-      <ion-icon name="star-outline"></ion-icon>
-    </ion-chip>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2.5"></ion-col>
+        <ion-col>
+          <ion-icon size="large" color="warning" *ngFor="let item of list; let i = index"
+            [name]="condition[2] <= i? 'star-outline' :'star'" (click)="review2(i)">
+          </ion-icon>
+        </ion-col>
+        <ion-col size="2.5"></ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card>
 
   <ion-card>
@@ -62,12 +62,17 @@
       <ion-card-title>O que achou do preço?</ion-card-title>
     </ion-card-header>
 
-    <ion-chip color="warning" *ngFor="let number of classification">
-      <ion-label color="dark">{{number}}</ion-label>
-    </ion-chip>
-    <ion-chip color="warning">
-      <ion-icon name="star-outline"></ion-icon>
-    </ion-chip>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2.5"></ion-col>
+        <ion-col>
+          <ion-icon size="large" color="warning" *ngFor="let item of list; let i = index"
+            [name]="condition[3] <= i? 'star-outline' :'star'" (click)="review3(i)">
+          </ion-icon>
+        </ion-col>
+        <ion-col size="2.5"></ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card>
 
   <ion-card>
@@ -75,12 +80,17 @@
       <ion-card-title>O que achou do tempo de espera?</ion-card-title>
     </ion-card-header>
 
-    <ion-chip color="warning" *ngFor="let estrela of estrelas">
-      <ion-label color="dark">{{number}}</ion-label>
-    </ion-chip>
-    <ion-chip color="warning">
-      <ion-icon name="star-outline"></ion-icon>
-    </ion-chip>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2.5"></ion-col>
+        <ion-col>
+          <ion-icon size="large" color="warning" *ngFor="let item of list; let i = index"
+            [name]="condition[4] <= i? 'star-outline' :'star'" (click)="review4(i)">
+          </ion-icon>
+        </ion-col>
+        <ion-col size="2.5"></ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card>
 
   <!-- Textarea in an item with a floating label -->
@@ -94,7 +104,7 @@
   </ion-card>
 
 
-  <ion-label color = "danger">
+  <ion-label color="danger">
     <ion-grid>
       <ion-row>
         <ion-col></ion-col>
