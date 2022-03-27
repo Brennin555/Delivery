@@ -43,17 +43,24 @@
   <ion-grid>
     <ion-row>
       <ion-col >
-        <ion-tab-button (click)="produtos()">
-          <ion-icon color="primary" name="list" size="large"></ion-icon>
-          <ion-label>Produtos</ion-label>
+        <ion-tab-button (click)="categorias()">
+          <ion-icon color="primary" name="list"size="large"></ion-icon>
+          <ion-label>CATEOGRIAS</ion-label>
         </ion-tab-button>
       </ion-col>
 
-      <ion-col (click)="carrinhoPage()">
-        <div class="rodape-carrinho center">
-        <ion-icon color="danger" name="cart" size="large"></ion-icon>
-        <div>R$ {{total_carrinho}}</div>
-      </div>
+      <ion-col >
+        <ion-tab-button (click)="carrinhoPage()">
+          <ion-icon color="danger" name="cart"size="large"></ion-icon>
+        <ion-label>R$ {{total_carrinho}}</ion-label>
+      </ion-tab-button>
+      </ion-col>
+
+      <ion-col >
+        <ion-tab-button (click)="avalPage()">
+          <ion-icon color="warning" name="star"size="large"></ion-icon>
+          <ion-label>AVALIAR</ion-label>
+        </ion-tab-button>
       </ion-col>
 
       </ion-row>

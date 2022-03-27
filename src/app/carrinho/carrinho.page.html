@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
@@ -6,7 +5,7 @@
     </ion-buttons>
     <ion-title>Itens do Carrinho: {{total_itens}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button  (click)="produtos()">
+      <ion-button (click)="produtos()">
         <ion-icon slot="end" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -14,33 +13,33 @@
 </ion-header>
 
 <ion-content>
-<ion-list>
-  <ion-item-sliding *ngFor="let item of lista">
-     
-    <ion-item-options side="start">
-      <ion-item-option (click)="addItem(item.id)" color="success"> + 1</ion-item-option>
-    </ion-item-options>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of lista">
 
-  <ion-item>
-    <ion-thumbnail slot="start">
-      <ion-img src="{{url_site_img}}{{item.imagem}}"></ion-img>
-    </ion-thumbnail>
-    <ion-label>
-      
-      {{item.nome}} <ion-icon color="danger" name="trash"></ion-icon>
-      <h6><span>R$ {{item.valor}}</span>  - QTD {{item.quantidade}}</h6>
+      <ion-item-options side="start">
+        <ion-item-option (click)="addItem(item.id)" color="success"> + 1</ion-item-option>
+      </ion-item-options>
 
-    </ion-label>
-    
- 
-  </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-img src="{{url_site_img}}{{item.imagem}}"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
 
-  <ion-item-options  side="end">
-    <ion-item-option (click)="removeItem(item.id)" color="danger"> - 1</ion-item-option>
-  </ion-item-options>
+          {{item.nome}} <ion-icon color="danger" name="trash"></ion-icon>
+          <h6><span>R$ {{item.valor}}</span> - QTD {{item.quantidade}} </h6>
 
-</ion-item-sliding>
-</ion-list>
+        </ion-label>
+
+
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option (click)="removeItem(item.id)" color="danger"> - 1</ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
 
 
 </ion-content>
@@ -48,52 +47,56 @@
 
 
 <ion-footer>
- 
+
 
   <ion-grid>
     <ion-row>
-      <ion-col >
-       
-          <ion-icon color="secondary" name="cart"></ion-icon>
-          Carrinho: R$ {{total_carrinho}}
-       
+      <ion-col>
+
+        <ion-icon color="secondary" name="cart"></ion-icon>
+        Carrinho: R$ {{total_carrinho}}
+
       </ion-col>
 
       <ion-col>
-      
+
         <ion-icon color="danger" name="car"></ion-icon>
         Frete: R$ {{frete}}
-       
-      
+
+
       </ion-col>
 
-      </ion-row>
+    </ion-row>
 
 
-      <ion-row>
-        <ion-col >
-         
-          <ion-button (click)="finalizarModal()" expand="block" fill="outline">FINALIZAR</ion-button>
-         
-        </ion-col>
-  
-        <ion-col>
-        
-         
-          <h6><ion-icon color="success" name="card"></ion-icon>
-            Sub-Total: R$ {{subtotal2}}</h6>
-        
-        
-        </ion-col>
-  
-        </ion-row>
+    <ion-row>
+      <ion-col>
 
-    
-      
-      </ion-grid>
 
-     
-    
-    
+        <h6>
+          <ion-icon name="receipt-outline"></ion-icon>
+          Protocolo: {{teste}}
+        </h6>
+      </ion-col>
+
+      <ion-col>
+
+
+        <h6>
+          <ion-icon color="success" name="card"></ion-icon>
+          Sub-Total: R$ {{subtotal2}}
+        </h6>
+
+
+      </ion-col>
+
+    </ion-row>
+    <ion-button (click)="finalizarModal()" expand="block" fill="outline">FINALIZAR</ion-button>
+
+  </ion-grid>
+
+
+
+
 
 </ion-footer>

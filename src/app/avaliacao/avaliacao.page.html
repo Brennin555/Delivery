@@ -14,8 +14,8 @@
   <ion-card>
     <ion-card-header color="warning">
       <ion-item color="warning">
-        <ion-label position="floating">CÓDIGO DO PEDIDO:</ion-label>
-        <ion-input></ion-input>
+        <ion-label position="floating">Protocolo: </ion-label>
+        <ion-input [(ngModel)] = "teste"></ion-input>
       </ion-item>
     </ion-card-header>
   </ion-card>
@@ -98,22 +98,23 @@
     <ion-card-header color="warning">
       <ion-item color="warning">
         <ion-label position="floating">COMENTÁRIO: (OPCIONAL)</ion-label>
-        <ion-input></ion-input>
+        <ion-input  [(ngModel)] = "comentario"></ion-input>
       </ion-item>
     </ion-card-header>
   </ion-card>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="voltar()">VOLTAR</ion-button>
+      </ion-col>
+      <ion-col></ion-col>
+      <ion-col></ion-col> 
+      <ion-col>
+        <ion-button (click)="finalizar()">FINALIZAR</ion-button>
+      </ion-col>
 
-  <ion-label color="danger">
-    <ion-grid>
-      <ion-row>
-        <ion-col></ion-col>
-        <ion-col>
-          <ion-button (click)="finalizar()">FINALIZAR</ion-button>
-        </ion-col>
-        <ion-col></ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-label>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

@@ -18,6 +18,9 @@ export class AvaliacaoPage implements OnInit {
  
   list: any[] = new Array(5);
 
+  teste : string;
+  comentario: string;
+  input : any;
  
 
   
@@ -33,6 +36,11 @@ export class AvaliacaoPage implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  voltar() {
+    //this.storage.clear();
+    this.router.navigate(['/produtos']);
+  }
+
   finalizar() {  
     this.alertAval();
    
@@ -42,7 +50,6 @@ export class AvaliacaoPage implements OnInit {
     console.log("produto-nota: " + this.condition[2]);
     console.log("preço-nota: " + this.condition[3]);
     console.log("espera-nota: " + this.condition[4]);
-  
   
   }
 
@@ -67,17 +74,33 @@ export class AvaliacaoPage implements OnInit {
     const alert = await this.alert.create({
       cssClass: 'my-custom-class',
       header: 'Resultado avaliação',
-      subHeader: 'Código:',// + codigo,
+      subHeader: 'Protocolo: ' + this.teste,
       message:
 
       'Nota do aplicativo:' + this.condition[1] +
       '   /   Nota do produto:' + this.condition[2] +
       '   /   Nota do preço:' + this.condition[3] +
-      '   /   Nota da espera:' + this.condition[4],
+      '   /   Nota da espera:' + this.condition[4] +
+      '   /   Comentário: ' + this.comentario,
+
 
        buttons: ['OK']
     });
 
     await alert.present();
+    this.teste = '';
+    this.comentario = '';
   }
+
+  updateTest(input){
+
+    this.teste = input
+    return this.teste;
+  }
+
+  function(user) {
+    console.log(user.word);
+
+  };
+
 }

@@ -31,6 +31,10 @@ export class CategoriasPage implements OnInit {
      this.router.navigate(['/login'])
  }
 
+ avalPage() {
+   this.router.navigate(['/avaliacao'])
+}
+
   ionViewWillEnter() {
     this.lista = [];
     this.start = 0;

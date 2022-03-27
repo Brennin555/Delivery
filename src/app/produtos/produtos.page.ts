@@ -36,7 +36,10 @@ export class ProdutosPage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  
+  avalPage() {
+    this.router.navigate(['/avaliacao'])
+ }
+ 
   ionViewWillEnter(){
 
     this.storage.getItem('session_storage').then((res)=>{

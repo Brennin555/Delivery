@@ -11,21 +11,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CarrinhoPage implements OnInit {
 
-  lista : any = [];
-  url_site_img : string;
-  limit : number = 10;
-  start : number = 0;
+  lista: any = [];
+  url_site_img: string;
+  limit: number = 10;
+  start: number = 0;
   id: number;
- 
-  cpf : string;
 
-  total_carrinho : string;
-  total_itens : string;
-  dadosLogin : any;
+  cpf: string;
 
-  frete : string;
-  subtotal : string;
-  subtotal2 : string;
+  total_carrinho: string;
+  total_itens: string;
+  dadosLogin: any;
+
+  frete: string;
+  subtotal: string;
+  subtotal2: string;
   previsao: string;
 
   rua: string;
@@ -35,40 +35,44 @@ export class CarrinhoPage implements OnInit {
   tipo: string;
   troco: string;
   obs: string;
-  
-  
-  constructor(public alertController: AlertController, private storage: NativeStorage, private actRouter: ActivatedRoute, private router: Router, private provider:Post, public toast: ToastController) { }
+
+  protocolo: string;
+  teste: number;
+
+
+  constructor(public alertController: AlertController, private storage: NativeStorage, private actRouter: ActivatedRoute, private router: Router, private provider: Post, public toast: ToastController) { }
 
   ngOnInit() {
-    
+
   }
 
-  logout(){
+  logout() {
     //this.storage.clear();
     this.router.navigate(['/login']);
   }
 
-  
-  ionViewWillEnter(){
 
-    this.storage.getItem('session_storage').then((res)=>{
+  ionViewWillEnter() {
+
+    this.storage.getItem('session_storage').then((res) => {
       this.dadosLogin = res;
       this.cpf = this.dadosLogin.cpf;
-     
-      
-    }); 
+
+
+    });
     this.cpf = '123.321.123-13';
 
-    if(this.cpf === undefined){
+    if (this.cpf === undefined) {
       this.router.navigate(['/login']);
       this.mensagemLogar();
       return;
     }
 
     this.lista = [];
-    this.start = 0;   
+    this.start = 0;
     this.listarCarrinho();
-    this.url_site_img = this.provider.url_site_img_produtos; 
+    this.getR(100, 999);
+    this.url_site_img = this.provider.url_site_img_produtos;
   }
 
 
@@ -83,7 +87,7 @@ export class CarrinhoPage implements OnInit {
   }
 
 
-  produtos(){
+  produtos() {
     this.router.navigate(['/produtos']);
   }
 
@@ -91,274 +95,324 @@ export class CarrinhoPage implements OnInit {
 
 
   //barra de rolagem
-loadData(event) {
+  loadData(event) {
 
-  this.start += this.limit;
+    this.start += this.limit;
 
-  setTimeout(() => {
-    this.listarCarrinho().then(()=>{ 
-      event.target.complete();
-     });
-   
-  }, 3000);
-  
+    setTimeout(() => {
+      this.listarCarrinho().then(() => {
+        event.target.complete();
+      });
 
-}
+    }, 3000);
 
 
-
-async mensagemSalvar(texto) {
-  const toast = await this.toast.create({
-    message: texto,
-    duration: 3000,
-    position: 'middle',
-    color: 'success'
-  });
-  toast.present();
-}
+  }
 
 
+
+  async mensagemSalvar(texto) {
+    const toast = await this.toast.create({
+      message: texto,
+      duration: 3000,
+      position: 'top',
+      color: 'success'
+    });
+    toast.present();
+  }
 
 
 
 
-listarCarrinho(){
 
-  this.listarClientes();
 
-  return new Promise(resolve => {
+  listarCarrinho() {
 
-  let dados = {
-    requisicao : 'listar-carrinho',
-    cpf :this.cpf, 
-    };
+    this.listarClientes();
 
-    this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
+    return new Promise(resolve => {
 
-        
-          
-          if(data['result'] == '0') {
-            this.ionViewWillEnter();
-          }else{
-            this.lista = [];
-            for(let item of data['result']){
-              this.lista.push(item);
-              this.total_carrinho = data['total'];
-              this.frete = data['frete'];
-              this.subtotal = data['subtotal'];
-              this.subtotal2 = data['subtotal2'];
-              this.total_itens = data['totalItens'];
-              this.previsao = data['previsao'];
-            }
+      let dados = {
+        requisicao: 'listar-carrinho',
+        cpf: this.cpf,
+      };
+
+      this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
+
+
+
+        if (data['result'] == '0') {
+          this.ionViewWillEnter();
+        } else {
+          this.lista = [];
+          for (let item of data['result']) {
+            this.lista.push(item);
+            this.total_carrinho = data['total'];
+            this.frete = data['frete'];
+            this.subtotal = data['subtotal'];
+            this.subtotal2 = data['subtotal2'];
+            this.total_itens = data['totalItens'];
+            this.previsao = data['previsao'];
           }
-         
-             
-      resolve(true);
-      
-  });
-
-});
-  
-}
-
-
-addItem(id){
-  return new Promise(resolve => {
-        
-    let dados = {
-      requisicao : 'add-item',
-      id : id,
-      cpf : this.cpf,
-      };
-
-      this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
-        
-        
-          this.mensagemSalvar('Item Adicionado!');
-          this.listarCarrinho();
-         
-        
-      });
-  });
-}
-
-
-removeItem(id){
-  return new Promise(resolve => {
-        
-    let dados = {
-      requisicao : 'remove-item',
-      id : id,
-      cpf : this.cpf,
-      };
-
-      this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
-        
-        
-          this.mensagemSalvar('Item Removido!');
-          this.listarCarrinho();
-         
-        
-      });
-  });
-}
-
-
-
-async finalizarModal(){
-
-  
-  
-  const alert = await this.alertController.create({
-    header: 'Finalizar Pedido!',
-    message: 'Previsão ' + this.previsao + ' Minutos',
-    backdropDismiss: false,
-    inputs: [
-
-
-      {
-        name: 'tipo',
-        type: 'text',
-        placeholder: 'Cartão / Dinheiro',
-        //value: this.usuario
-      },
-
-      {
-        name: 'troco',
-        type: 'number',
-        placeholder: 'Valor para o Troco',
-        //value: this.usuario
-      },
-
-
-      {
-        name: 'rua',
-        type: 'text',
-        placeholder: 'Rua',
-        value: this.rua
-      },
-
-
-      {
-        name: 'numero',
-        type: 'number',
-        placeholder: 'Número',
-        value: this.numero
-      },
-
-      {
-        name: 'bairro',
-        type: 'text',
-        placeholder: 'Bairro',
-        value: this.bairro
-      },
-
-      {
-        name: 'obs',
-        type: 'textarea',
-        placeholder: 'Obs: Tirar o Picles, etc',
-        
-      },
-
-         
-      
-    ],
-    
-
-    
-    buttons: [
-      {
-        text: 'Cancelar',
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: () => {
-          console.log('Confirm Cancel');
         }
-      }, {
-        text: 'Enviar',
-        handler: (data) => {
-         //atualizar pag
-         
-         this.rua = data.rua;
-         this.bairro = data.bairro;
-         this.numero = data.numero;
-         this.tipo = data.tipo;
-         this.troco = data.troco;
-         this.obs = data.obs;
-         
-         this.finalizar();
-        }
-      }
-    ]
-  });
-
-  await alert.present();
-
-}
 
 
-finalizar(){
-  return new Promise(resolve => {
-        
-    let dados = {
-      requisicao : 'finalizar-pedido',
-      cpf : this.cpf,
-      rua : this.rua,
-      numero : this.numero,
-      bairro : this.bairro,
-      obs : this.obs,
-      troco : this.troco,
-      tipo : this.tipo,
-      total: this.subtotal,
+        resolve(true);
+
+      });
+
+    });
+
+  }
+
+
+  addItem(id) {
+   // this.getR(100, 999);
+    return new Promise(resolve => {
+
+      let dados = {
+        requisicao: 'add-item',
+        id: id,
+        cpf: this.cpf,
       };
 
       this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
-        
-        
-          this.mensagemSalvar(data['texto']);
-          this.router.navigate(['/produtos']);
-         
-        
+
+
+        this.mensagemSalvar('Item Adicionado!');
+        this.listarCarrinho();
+
+
       });
-  });
-}
+    });
+  }
+
+
+  removeItem(id) {
+    return new Promise(resolve => {
+
+      let dados = {
+        requisicao: 'remove-item',
+        id: id,
+        cpf: this.cpf,
+      };
+
+      this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
+
+
+        this.mensagemSalvar('Item Removido!');
+        this.listarCarrinho();
+
+
+      });
+    });
+  }
 
 
 
+  async finalizarModal() {
 
 
 
-listarClientes(){
-  return new Promise(resolve => {
+    const alert = await this.alertController.create({
+      header: 'Finalizar Pedido!',
+      message: 'Protocolo: ' + this.teste,
+      backdropDismiss: false,
+      inputs: [
 
-  let dados = {
-    requisicao : 'listar-clientes',
-    cpf :this.cpf, 
-    };
 
-    this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
+        {
+          name: 'tipo',
+          type: 'text',
+          placeholder: 'Cartão / Dinheiro',
+          //value: this.usuario
+        },
 
-        
-          
-          if(data['result'] == '0') {
-         //   this.ionViewWillEnter();
-          }else{
-           
-           
-              this.rua = data['rua'];
-              this.numero = data['numero'];
-              this.bairro = data['bairro'];
-              
-           
+        {
+          name: 'troco',
+          type: 'number',
+          placeholder: 'Valor para o Troco',
+          //value: this.usuario
+        },
+
+
+        {
+          name: 'rua',
+          type: 'text',
+          placeholder: 'Rua',
+          value: this.rua
+        },
+
+
+        {
+          name: 'numero',
+          type: 'number',
+          placeholder: 'Número',
+          value: this.numero
+        },
+
+        {
+          name: 'bairro',
+          type: 'text',
+          placeholder: 'Bairro',
+          value: this.bairro
+        },
+
+        {
+          name: 'obs',
+          type: 'textarea',
+          placeholder: 'Obs: Tirar o Picles, etc',
+
+        },
+
+
+
+      ],
+
+
+
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
           }
-         
-             
-      resolve(true);
-      
-  });
+        }, {
+          text: 'Enviar',
+          handler: (data) => {
+            //atualizar pag
 
-});
-  
-}
+            this.rua = data.rua;
+            this.bairro = data.bairro;
+            this.numero = data.numero;
+            this.tipo = data.tipo;
+            this.troco = data.troco;
+            this.obs = data.obs;
+            
+            this.conviteAval();
+            this.finalizar();
+          
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+  }
+
+
+  finalizar() {
+    //this.getR(100, 1000);
+
+    return new Promise(resolve => {
+
+      let dados = {
+        requisicao: 'finalizar-pedido',
+        cpf: this.cpf,
+        rua: this.rua,
+        numero: this.numero,
+        bairro: this.bairro,
+        obs: this.obs,
+        troco: this.troco,
+        tipo: this.tipo,
+        total: this.subtotal,
+      };
+
+      this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
+
+
+        this.mensagemSalvar(data['texto']);
+
+        this.getR(100, 1000);    
+        
+
+        this.router.navigate(['/produtos']);
+
+
+      });
+    });
+  }
+
+
+
+
+
+
+  listarClientes() {
+    return new Promise(resolve => {
+
+      let dados = {
+        requisicao: 'listar-clientes',
+        cpf: this.cpf,
+      };
+
+      this.provider.dadosApi(dados, 'apiProdutos.php').subscribe(data => {
+
+
+
+        if (data['result'] == '0') {
+          //   this.ionViewWillEnter();
+        } else {
+
+
+          this.rua = data['rua'];
+          this.numero = data['numero'];
+          this.bairro = data['bairro'];
+
+
+        }
+
+
+        resolve(true);
+
+      });
+
+    });
+
+  }
+
+  //----------------------------------
+  getR(min, max) {
+    this.teste = Math.random() * (max - min) + min;
+    this.teste = Math.round(this.teste);
+    return this.teste;
+  }
+
+  //---------------------------------
+
+  async conviteAval() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Avalie sua compra!!',
+      subHeader: 'Protocolo: ' + this.teste,// + codigo,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'OK',
+          handler: () => {
+
+            this.router.navigate(['/avaliacao']);
+          }
+        }
+      ]
+    });
+
+
+
+
+
+    await alert.present();
+  }
+
+
 
 }
