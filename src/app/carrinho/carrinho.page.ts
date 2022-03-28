@@ -39,7 +39,6 @@ export class CarrinhoPage implements OnInit {
   protocolo: string;
   teste: number;
 
-
   constructor(public alertController: AlertController, private storage: NativeStorage, private actRouter: ActivatedRoute, private router: Router, private provider: Post, public toast: ToastController) { }
 
   ngOnInit() {
@@ -115,15 +114,11 @@ export class CarrinhoPage implements OnInit {
     const toast = await this.toast.create({
       message: texto,
       duration: 3000,
-      position: 'top',
+      position: 'middle',
       color: 'success'
     });
     toast.present();
   }
-
-
-
-
 
 
   listarCarrinho() {
@@ -148,12 +143,13 @@ export class CarrinhoPage implements OnInit {
           for (let item of data['result']) {
             this.lista.push(item);
             this.total_carrinho = data['total'];
-            this.frete = data['frete'];
+            this.frete = '6,00'
             this.subtotal = data['subtotal'];
             this.subtotal2 = data['subtotal2'];
             this.total_itens = data['totalItens'];
             this.previsao = data['previsao'];
           }
+
         }
 
 
@@ -413,6 +409,16 @@ export class CarrinhoPage implements OnInit {
     await alert.present();
   }
 
+  arrumaTotal(){
+    let freteFormatado = 6.00;
+    let subtotalFormatado = parseFloat(this.subtotal);
+    let subTotalInteiro = parseInt(this.subtotal);
+    let subTotalResto = (subtotalFormatado - subTotalInteiro) * 100 ; 
+    subTotalResto =  Math.round(subTotalResto);
 
+    return (subTotalInteiro + freteFormatado) + ',' + subTotalResto
+  }
+
+  
 
 }
